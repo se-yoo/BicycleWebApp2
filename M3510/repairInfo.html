@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+	var Gu;
+	var dong;
+	
+	function _GET(search) {
+		var obj = {};
+		var uri = decodeURI(search);
+		uri = uri.slice(1, uri.length);
+
+		var param = uri.split('&');
+
+		for (var i = 0; i < param.length; i++) {
+			var devide = param[i].split('=');
+			obj[devide[0]] = devide[1];
+		}
+
+		return obj;
+	}
+
+	window.onload = function() {
+		var search = window.location.search;
+		var getData = _GET(search);
+		var addr=getData.address;
+		
+		var first=addr.indexOf(" ");
+		var last=addr.lastIndexOf(" ");
+		Gu=addr.substring(first+1,last-1);
+		var first2=addr.lastIndexOf(" ");
+		var last2=addr.length;
+		dong=addr.substring(first2+1,last2-1);
+
+		readyInfo();
+	}
+	function readyInfo() {
+		//13개 있음
+		var url = "http://openapi.seoul.go.kr:8088/5a71546a53796f6f39334764524e4f/json/WriteBikeRepair/1/13";
+		$.getJSON(url, updateRepairBicycle);
+	}
+	function updateRepairBicycle(repairs) {
+		var arr = repairs.WriteBikeRepair.row;
+		var addr = "";
+		var cnt=0;
+		
+		for (var i = 0; i < arr.length; i++) {
+			var repair = arr[i];
+			//if(km <= 0.7){ //주소가 있고 반경 700m 이내
+			//addMarker(imageSrc, imageSize, imageOption, ddarung.latitude, ddarung.longitude, ddarung.content_nm,ddarung.new_addr,ddarung.cradle_count);
+			//}
+			if((repair.BR_NM).indexOf(Gu)!=-1||(repair.BR_ORGAN).indexOf(Gu)!=-1||(repair.BR_NM).indexOf(dong)!=-1||(repair.BR_ORGAN).indexOf(dong)!=-1){
+				var one=document.createElement("div");
+				one.className="one";
+				one.innerHTML="<p><span>이름</span>"+repair.BR_NM + "<a href='https://www.google.co.kr/maps/search/"+repair.BR_NM+"'><button>구글지도검색</button></a><br><span>이용문의</span>" 
+				+ repair.BR_TEL + "<br><span>이용시간</span>"+ repair.BR_USETIME + "<br><span>설치 운영기관</span>" + repair.BR_ORGAN+"</p>";
+				document.getElementById("container").appendChild(one);
+				document.getElementById("container").appendChild(document.createElement("hr"));
+				cnt++;
+			}
+		}
+				
+		if(cnt==0){
+			var one=document.createElement("div");
+			one.innerHTML="<p><span>검색결과가 없습니다</span></p>";
+			document.getElementById("container").appendChild(one);
+		}
+		
+		var naverSearch=document.createElement("div");
+		naverSearch.className="naverSearch";
+		naverSearch.innerHTML="<a href='https://map.naver.com/?query="+Gu+" 자전거 수리'><button>네이버에서 "+Gu+"구 수리시설 찾기</button></a>"
+		document.getElementById("container").appendChild(naverSearch);
+	}
+</script>
+<style>
+	span{
+		font-weight:bold;
+		color:#d4b7f4;
+		margin-right:10px;
+	}
+	button{
+		background-color:#fc8f91;
+		color:white;
+		margin-left:10px;
+		border:0px;
+		font-size:2em;
+		border-radius:10px;
+	}
+	hr{
+		background-color:lightgray;
+		border:0px;
+		height:1px;
+	}
+	body{
+		font-size:1.1em;
+		text-align:center;
+	}
+	#container .one{
+		margin:0% 10%;
+		text-align:left;
+	}
+	.naverSearch button{
+		padding:20px;
+		margin:1.1em;
+		height:90px;
+	}
+</style>
+</head>
+<body>
+	<div id="container">
+	</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+  	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  	<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+    <title>서울시 자전거대여소 및 편의시설 안내</title>
+	
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebb455baf07dc27305252283be9a6701&libraries=services,clusterer,drawing?autoload=false"></script>
+<script src="m3510.js"></script>
+<link rel = "stylesheet" href = "m3510.css">
+</head>
+<body>
+<div data-role="page" >
+<div id="startDisplay" onclick="document.getElementById('startDisplay').style.display = 'none';" style="cursor:pointer;">
+	<img src="mstart.gif" style="width:100%; position:absolute; z-index:6;">
+</div>
+<div data-role="header" style="text-align:center;background-color:#ffffff">
+	<div style="margin-top:20px;margin-right:30px;text-align:right;"><img src="pause.png" id='play' style="width:4%"><img src="speaker.png" id='mute' style="width:4%;margin-left:10px;"></div>
+	<div><img src="mtitle.png" style="width:100%;margin-bottom:20px;"></div>
+	<img src="help.png" id="helpBt" style="width:4%;z-index:5;margin-bottom:30px;margin-right:20px" onmouseover="this.src='help_mouse.png'" onmouseout="this.src='help.png'">
+	<img src="button.png" id='button' style="width:40%;z-index:5;margin-bottom:20px;" onmouseover="this.src='button_mouse.png'" onmouseout="this.src='button.png'">
+	<img src="button1.PNG" id='button1' style="width:40%;z-index:5;margin-bottom:20px;" onmouseover="this.src='button1_mouse.PNG'" onmouseout="this.src='button1.PNG'"><br>
+	<img src="button2.png" id='button2' style="width:40%;z-index:5;margin-bottom:20px;" onmouseover="this.src='button2_mouse.png'" onmouseout="this.src='button2.png'">
+	<img src="button3.png" id='button3' style="width:40%;z-index:5;margin-bottom:20px;" onmouseover="this.src='button3_mouse.png'" onmouseout="this.src='button3.png'">
+	<div id="langMenu" style="font-size:1.5em;color:#d4b7f4;margin-bottom:20px;display:block;font-weight:normal;">
+		<p style="width:50%;margin:auto"><input type="radio" name="lang" value="Kor" checked>한국어
+		<input type="radio" name="lang" value="Eng">English
+		<input type="radio" name="lang" value="Cng">中國語</p><br>
+		* 체크 후에 지도를 한번 드래그해주세요<br>(Please drag on the map after choice.)
+	</div>
+	<div id="helpcontent" style="width:100%; margin-bottom:20px;"><img src="mmakerInfo.png" style="width:70%"></div>
+</div>
+
+<div data-role="main" id="map" class="ui-content" style="z-index:1;">
+</div>
+<div id="weather" style="width:100%; margin:20px 20px; background-color:white;">
+	<div id="weatherImg"></div><br>
+	<div id="weatherTxt"></div>
+</div>
+</div>
+</body>
+</html>
